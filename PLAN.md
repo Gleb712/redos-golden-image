@@ -21,7 +21,7 @@
 | 00 | — | Создание репозитория | - | + |
 | 01 | `docs/plan` | План, очистка структуры | - | + |
 | 02 | `vm/install` | ВМ и установка ОС с LVM | 1.2, 1.3, 2.1 | + |
-| 03 | `base/setup` | Базовая настройка, open-vm-tools | 2.3, 2.9.4 | - |
+| 03 | `base/setup` | Базовая настройка, open-vm-tools | 2.3, 2.9.4 | + |
 | 04 | `base/repos` | Репозитории, обновление | 2.5 | - |
 | 05 | `security/users` | Пользователи, sudo, политики паролей | 1.6, 2.7.1–2.7.3 | - |
 | 06 | `security/ssh` | SSH-ключи, sshd | 2.7.4 | - |
@@ -38,21 +38,21 @@ DNS (этап 11) намеренно идёт после установки вс
 ## Этапы
 
 ### 01 · docs/plan
-- [ ] Добавить план работы над проектом
+- [x] Добавить план работы над проектом
 
 ### 02 · vm/install
-- [ ] ВМ: 2 vCPU, 4 ГБ RAM, UEFI, VMXNET3, контроллер LSI Logic SAS или VMware Paravirtual
-- [ ] Диск 50 ГБ, VMDK, thin
-- [ ] Установка RedOS 7.3.7
-- [ ] Разбивка: `/boot/efi` и `/boot` как обычные разделы, остальное в LVM `vg_uvm` (swap, `/`, `/var`, `/home`, `/tmp`, резерв)
-- [ ] Проверка: `lsblk`, `vgs`, `lvs`, `df -h`
+- [x] ВМ: 2 vCPU, 4 ГБ RAM, UEFI, VMXNET3, контроллер LSI Logic SAS или VMware Paravirtual
+- [x] Диск 50 ГБ, VMDK, thin
+- [x] Установка RedOS 7.3.7
+- [x] Разбивка: `/boot/efi` и `/boot` как обычные разделы, остальное в LVM `vg_uvm` (swap, `/`, `/var`, `/home`, `/tmp`, резерв)
+- [x] Проверка: `lsblk`, `vgs`, `lvs`, `df -h`
 
 ### 03 · base/setup
-- [ ] Имя хоста `uvm-template-01.uvm-group.com`
-- [ ] Удалить anaconda и файлы kickstart
-- [ ] Отключить floppy
-- [ ] Замаскировать upower
-- [ ] Установить и включить open-vm-tools
+- [x] Имя хоста `uvm-template-01.uvm-group.com`
+- [x] Удалить anaconda и файлы kickstart
+- [x] Отключить floppy
+- [x] Замаскировать upower
+- [x] Установить и включить open-vm-tools
 
 ### 04 · base/repos
 - [ ] Файлы `RedOS-Base.repo` и `RedOS-Updates.repo`
