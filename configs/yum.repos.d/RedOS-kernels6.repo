@@ -1,0 +1,6 @@
+[kernels6]
+name=Repositories for kernels6
+baseurl=https://repo1.red-soft.ru/redos/7.3/$basearch/extras/kernels6-73,https://mirror.yandex.ru/redos/7.3/$basearch/extras/kernels6-73,http://repo.red-soft.ru/redos/7.3/$basearch/extras/kernels6-73
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-RED-SOFT

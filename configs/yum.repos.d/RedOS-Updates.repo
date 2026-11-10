@@ -1,0 +1,6 @@
+[updates]
+name=RedOS - Updates
+baseurl=https://repo1.red-soft.ru/redos/7.3/$basearch/updates,https://mirror.yandex.ru/redos/7.3/$basearch/updates,http://repo.red-soft.ru/redos/7.3/$basearch/updates
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-RED-SOFT

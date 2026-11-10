@@ -22,7 +22,7 @@
 | 01 | `docs/plan` | План, очистка структуры | - | + |
 | 02 | `vm/install` | ВМ и установка ОС с LVM | 1.2, 1.3, 2.1 | + |
 | 03 | `base/setup` | Базовая настройка, open-vm-tools | 2.3, 2.9.4 | + |
-| 04 | `base/repos` | Репозитории, обновление | 2.5 | - |
+| 04 | `base/repos` | Репозитории, обновление | 2.5 | + |
 | 05 | `security/users` | Пользователи, sudo, политики паролей | 1.6, 2.7.1–2.7.3 | - |
 | 06 | `security/ssh` | SSH-ключи, sshd | 2.7.4 | - |
 | 07 | `security/firewall` | firewalld, зоны | 2.8 | - |
@@ -55,8 +55,8 @@ DNS (этап 11) намеренно идёт после установки вс
 - [x] Установить и включить open-vm-tools
 
 ### 04 · base/repos
-- [ ] Файлы `RedOS-Base.repo` и `RedOS-Updates.repo`
-- [ ] `dnf makecache`, `dnf upgrade`
+- [x] Файлы `RedOS-Base.repo` и `RedOS-Updates.repo`
+- [x] `dnf makecache`, `dnf upgrade`
 
 ### 05 · security/users
 - [ ] Пользователи `adminos` и `neustroeved`, группа `wheel`, sudo
