@@ -5,9 +5,9 @@
 source "$(dirname "${BASH_SOURCE[0]}")/lib/check.sh"
 require_root
 
-# Размер тома в GiB
+# LVM выводит размеры с точкой независимо от системной локали.
 lv_size() {
-    lvs --noheadings --units g --nosuffix -o lv_size "vg_uvm/$1" 2>/dev/null | tr -d ' <'
+    LC_ALL=C lvs --noheadings --units g --nosuffix -o lv_size "vg_uvm/$1" 2>/dev/null | tr -d ' <'
 }
 
 section "Операционная система"
@@ -42,13 +42,24 @@ done
 check_eq "lv_swap: размер, GiB" "4.00" "$(lv_size lv_swap)"
 check_eq "Swap активен" "4G" "$(swapon --noheadings --show=SIZE | tr -d ' ')"
 
-vfree=$(vgs --noheadings --units g --nosuffix -o vg_free vg_uvm | tr -d ' <')
-check "Резерв в vg_uvm не меньше 2 GiB: $vfree" awk -v f="$vfree" 'BEGIN { exit !(f >= 2) }'
+vfree=$(LC_ALL=C vgs --noheadings --units g --nosuffix -o vg_free vg_uvm | tr -d ' <')
+check "Резерв в vg_uvm не меньше 2 GiB: $vfree" env LC_ALL=C awk -v f="$vfree" 'BEGIN { exit !(f >= 2) }'
 
 section "Виртуальное оборудование"
 iface=$(ip -o route show default | awk '{ print $5; exit }')
 nic_driver=$(readlink -f "/sys/class/net/$iface/device/driver" 2>/dev/null)
 check_eq "Драйвер сети ($iface)" "vmxnet3" "${nic_driver##*/}"
-check "Драйвер диска vmw_pvscsi загружен" grep -qw vmw_pvscsi /proc/modules
+# Первый компонент SCSI-адреса диска — номер его хоста.
+disk_device=$(readlink -e /sys/class/block/sda/device)
+scsi_address=${disk_device##*/}
+scsi_host=${scsi_address%%:*}
+disk_driver=''
+if [[ $scsi_host =~ ^[0-9]+$ ]]; then
+    disk_driver=$(cat "/sys/class/scsi_host/host$scsi_host/proc_name" 2>/dev/null)
+fi
+case "$disk_driver" in
+    mptsas|vmw_pvscsi) pass "Контроллер диска sda: $disk_driver" ;;
+    *) fail "Контроллер диска sda: ожидался mptsas или vmw_pvscsi, получено ${disk_driver:-нет данных}" ;;
+esac
 
 summary

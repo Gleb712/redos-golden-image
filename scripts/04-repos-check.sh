@@ -22,7 +22,16 @@ enabled=$(dnf -q repolist --enabled | awk 'NR > 1 { print $1 }' | sort | xargs)
 check_eq "Включенные репозитории" "base kernels6 updates" "$enabled"
 
 section "Обновления"
-check "Нет доступных обновлений" dnf -q check-update
+dnf_output=$(dnf -q check-update 2>&1)
+dnf_status=$?
+case "$dnf_status" in
+    0) pass "Нет доступных обновлений" ;;
+    100) fail "Доступны обновления. Список можно посмотреть командой dnf check-update" ;;
+    *)
+        fail "Проверка обновлений DNF завершилась с кодом $dnf_status"
+        printf '%s\n' "$dnf_output" >&2
+        ;;
+esac
 latest_kernel=$(rpm -q kernel-lt --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -V | tail -n 1)
 check_eq "Работает последнее установленное ядро" "$latest_kernel" "$(uname -r)"
 
