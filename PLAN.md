@@ -23,9 +23,9 @@
 | 02 | `vm/install` | ВМ и установка ОС с LVM | 1.2, 1.3, 2.1 | + |
 | 03 | `base/setup` | Базовая настройка, open-vm-tools | 2.3, 2.9.4 | + |
 | 04 | `base/repos` | Репозитории, обновление | 2.5 | + |
-| 05 | `security/users` | Пользователи, sudo, политики паролей | 1.6, 2.7.1–2.7.3 | - |
-| 06 | `security/ssh` | SSH-ключи, sshd | 2.7.4 | - |
-| 07 | `security/firewall` | firewalld, зоны | 2.8 | - |
+| 05 | `security/users` | Пользователи, sudo, политики паролей | 1.6, 2.7.1–2.7.3 | + |
+| 06 | `security/ssh` | SSH-ключи, sshd | 2.7.4 | + |
+| 07 | `security/firewall` | firewalld, зоны | 2.8 | + |
 | 08 | `services/base` | chrony, rsyslog, postfix | 2.9.1–2.9.3 | - |
 | 09 | `services/zabbix` | Zabbix agent 2 | 2.9.5–2.9.8 | - |
 | 10 | `services/kaspersky` | klnagent, KESL, очистка | 2.10 | - |
@@ -59,21 +59,23 @@ DNS (этап 11) намеренно идёт после установки вс
 - [x] `dnf makecache`, `dnf upgrade`
 
 ### 05 · security/users
-- [ ] Пользователи `adminos` и `neustroeved`, группа `wheel`, sudo
-- [ ] `chage`: 2 / 70 / 7 дней
-- [ ] Политика паролей: длина от 12 символов, запрет 3 последних паролей
-- [ ] Блокировка пароля root (только после проверки sudo у adminos)
+- [x] Пользователи `adminos` и `neustroeved`, группа `wheel`, sudo
+- [x] `chage`: 2 / 70 / 7 дней
+- [x] Политика паролей: длина от 12 символов, запрет 3 последних паролей
+- [x] Блокировка пароля root (только после проверки sudo у adminos)
 
 ### 06 · security/ssh
-- [ ] Ключ `ed25519` с парольной фразой, `ssh-copy-id`
-- [ ] Вход по ключу проверен
-- [ ] `PasswordAuthentication no`, `PermitRootLogin no`
+- [x] Ключ `ed25519` с парольной фразой, публичный ключ добавлен в `authorized_keys` по SSH
+- [x] Вход по ключу проверен
+- [x] `PasswordAuthentication no`, `PermitRootLogin no`
 
 ### 07 · security/firewall
-- [ ] Зона `adminos`: ssh из 10.0.1.0/24
-- [ ] Зона `zabbix-agent`: 11050/tcp из 10.0.1.34
-- [ ] Зона `kln-agent`: 13000/tcp, 14000/tcp, 15000/udp из 10.0.12.202
-- [ ] ssh убран из зоны `public` (после проверки доступа)
+- [x] Зона `adminos`: ssh из 10.0.1.0/24
+- [x] Зона `zabbix-agent`: 11050/tcp из 10.0.1.34
+- [x] Зона `kln-agent`: 13000/tcp, 14000/tcp, 15000/udp из 10.0.12.202
+- [x] ssh убран из зоны `public` (после проверки доступа)
+
+Проверка этапа 07 на учебной ВМ: 43 SUCCESS, 0 FAILED. Подключение к порту 22 с Windows вне `10.0.1.0/24` блокируется. Подключение из разрешённой подсети в этом прогоне не проверялось.
 
 ### 08 · services/base
 - [ ] chrony: NTP `uv-sp-dc01.uvm-group.com` (конфиг под chrony 4)
